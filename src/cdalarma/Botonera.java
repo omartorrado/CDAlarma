@@ -17,44 +17,77 @@ public class Botonera {
     /**
      * Activa o desactiva la alarma segun su estado anterior
      */
-    public void AlarmaOnOff(){
-        
+    public static void AlarmaOnOff(){
+        if(alarmaActiva){
+            alarmaActiva=false;
+        }else{
+            alarmaActiva=true;
+        }
     }
     
     /**
      * Detiene el altavoz cuando esta sonando la alarma
      */
-    public void StopAlarma(){
+    public static void StopAlarma(){
         
     }
     
     /**
      * Configura la hora del reloj
      */
-    public void configHora(){
-        
+    public static void configHora(){
+        if(setHora==false){
+        setHora=true;
+        setAlarma=false;
+        Display.showLeds(true, false, true);
+        Display.showClock();
+        }else{
+            setHora=false;
+            Display.showLeds(false, false, false);
+        }
     }
     
     /**
      * Configura la hora de la alarma
      */
-    public void configAlarma(){
-        
+    public static void configAlarma(){
+        if(setAlarma==false){
+        setAlarma=true;
+        setHora=false;
+        Display.showLeds(false, true, true);
+        Display.showAlarma();
+        }else{
+            setAlarma=false;
+            Display.showLeds(false, false, false);
+        }
     }
     
     /**
      * Aumenta los minutos de la hora actual o de la alarma dependiendo 
      * de cual de configHora/configAlarma este activo
      */
-    public void plusMinutos(){
-        
+    public static void plusMinutos(){
+        if(setHora){
+            Reloj.horaActual=Reloj.horaActual.plusMinutes(1);
+            Display.showClock();
+        }else if(setAlarma){
+            Reloj.alarma=Reloj.alarma.plusMinutes(1);
+            Display.showAlarma();
+        }        
     }
     
     /**
      * Aumenta las horas de la hora actual o de la alarma dependiendo 
      * de cual de configHora/configAlarma este activo
      */
-    public void plusHoras(){
+    public static void plusHoras(){
+        if(setHora){
+            Reloj.horaActual=Reloj.horaActual.plusHours(1);
+            Display.showClock();
+        }else if(setAlarma){
+            Reloj.alarma=Reloj.alarma.plusHours(1);
+            Display.showAlarma();
+        }
         
     }
 }

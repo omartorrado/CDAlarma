@@ -6,10 +6,8 @@
 package cdalarma;
 
 import java.time.LocalTime;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Esta el la clase principal. Aqui se definen las variables de 
@@ -18,28 +16,34 @@ import javax.swing.JPanel;
  */
 public class Reloj {
     
-    public static LocalTime horaActual,alarma;
+    public static LocalTime horaActual=LocalTime.now();
+    public static LocalTime alarma=LocalTime.MIDNIGHT;
     
-    public void Interfaz(){
-        JFrame marco = new JFrame();
-        JPanel panelDisplay = new JPanel();
-        JPanel panelBotones = new JPanel();
-        JLabel displayHora = new JLabel();
-        JLabel displayAlarma = new JLabel();
-        JLabel iconoShowHora = new JLabel();
-        JLabel iconoShowAlarma = new JLabel();
-        JLabel iconoSet = new JLabel();
-        JButton alarmaOnOff = new JButton();
-        JButton setHora = new JButton();
-        JButton setAlarma = new JButton();
-        JButton plusHora = new JButton();
-        JButton plusMinutos = new JButton();
-    }
+
     /**
      * Metodo Main
      * @param args 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) {   
+        Display.InterfazInit();
+        UpdateClock uc=new UpdateClock();
+        uc.start();
+    }
+    
+    public static class UpdateClock extends Thread{
+
+        @Override
+        public void run() {
+            while(true){            
+            try {
+                Thread.sleep(1000);
+                Display.showClock();
+                System.out.println("Actualizado");
+            } catch (InterruptedException ex) {
+                
+            }
+            }
+        }
         
     }
    
