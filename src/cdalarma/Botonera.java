@@ -19,10 +19,11 @@ public class Botonera {
      */
     public static void AlarmaOnOff(){
         if(alarmaActiva){
-            alarmaActiva=false;
+            alarmaActiva=false;            
         }else{
             alarmaActiva=true;
         }
+        Display.showAlarma();
     }
     
     /**

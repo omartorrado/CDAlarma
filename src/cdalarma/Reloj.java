@@ -6,8 +6,7 @@
 package cdalarma;
 
 import java.time.LocalTime;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JLabel;
 
 /**
  * Esta el la clase principal. Aqui se definen las variables de 
@@ -16,7 +15,7 @@ import java.util.logging.Logger;
  */
 public class Reloj {
     
-    public static LocalTime horaActual=LocalTime.now();
+    public static LocalTime horaActual=LocalTime.of(0, 0);
     public static LocalTime alarma=LocalTime.MIDNIGHT;
     
 
@@ -34,13 +33,19 @@ public class Reloj {
 
         @Override
         public void run() {
-            while(true){            
+            while(this.isAlive()){                  
             try {
                 Thread.sleep(1000);
-                Display.showClock();
-                System.out.println("Actualizado");
-            } catch (InterruptedException ex) {
-                
+                horaActual=horaActual.plusSeconds(1);
+                Display.showClock(); 
+                System.out.println(Display.panelIconos.getComponentCount());
+                if(horaActual.getHour()==alarma.getHour()&&horaActual.getMinute()==alarma.getMinute()&&Display.panelIconos.getComponentCount()<4){
+                    Altavoz.ringOn=true;
+                    Display.panelIconos.add(new JLabel("ALARMA SONANDO"));
+                }else if(Display.panelIconos.getComponentCount()>3){
+                    Display.panelIconos.remove(3);
+                }
+            } catch (InterruptedException ex) {                
             }
             }
         }

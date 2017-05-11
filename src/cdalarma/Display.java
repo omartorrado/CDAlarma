@@ -5,8 +5,10 @@
  */
 package cdalarma;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -45,7 +47,13 @@ public class Display {
         panelBotones.add(plusMinutos);
         
         displayHora.setText(Reloj.horaActual.getHour()+":"+Reloj.horaActual.getMinute()+":"+Reloj.horaActual.getSecond());
+        displayHora.setFont(new Font("TimesRoman",Font.PLAIN,24));
+        displayAlarma.setFont(new Font(displayAlarma.getFont().getFamily(),Font.PLAIN,24));
+        displayHora.setAlignmentX(0.5f);
+        displayAlarma.setAlignmentX(0.5f);
+        
         displayAlarma.setText(Reloj.alarma.getHour()+":"+Reloj.alarma.getMinute());
+        
         panelDisplay.setLayout(new BoxLayout(panelDisplay,BoxLayout.Y_AXIS));
         panelDisplay.add(displayHora);
         panelDisplay.add(displayAlarma);
@@ -53,6 +61,10 @@ public class Display {
         panelIconos.add(iconoShowHora);
         panelIconos.add(iconoShowAlarma);
         panelIconos.add(iconoSet);
+        
+        alarmaOnOff.addActionListener((ActionEvent e)->{
+            Botonera.AlarmaOnOff();
+        });
         
         setHora.addActionListener((ActionEvent e)-> {
             Botonera.configHora();
@@ -108,11 +120,32 @@ public class Display {
     }
 
     public static void showClock() {
-        displayHora.setText(Reloj.horaActual.getHour()+":"+Reloj.horaActual.getMinute()+":"+Reloj.horaActual.getSecond());
-    }
+        String hora,minuto,segundo;
+        if(Reloj.horaActual.getHour()<10){
+            hora="0"+Reloj.horaActual.getHour();
+        }else{
+            hora=""+Reloj.horaActual.getHour();
+        }
+        if(Reloj.horaActual.getMinute()<10){
+            minuto="0"+Reloj.horaActual.getMinute();
+        }else{
+            minuto=""+Reloj.horaActual.getMinute();
+        }
+        if(Reloj.horaActual.getSecond()<10){
+            segundo="0"+Reloj.horaActual.getSecond();
+        }else{
+            segundo=""+Reloj.horaActual.getSecond();
+        }
+        displayHora.setText(hora+":"+minuto+":"+segundo);
+        
+        }
     
     public static void showAlarma(){
-        displayAlarma.setText(Reloj.alarma.getHour()+":"+Reloj.alarma.getMinute());
+        if(Botonera.alarmaActiva){
+            displayAlarma.setText(Reloj.alarma.getHour()+":"+Reloj.alarma.getMinute()+"  ACTIVA");
+        }else{
+            displayAlarma.setText(Reloj.alarma.getHour()+":"+Reloj.alarma.getMinute()+"  APAGADA");
+        }
     }
 
 }
