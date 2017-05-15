@@ -7,8 +7,6 @@ package cdalarma;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.util.HashSet;
-import java.util.Set;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -38,6 +36,7 @@ public class Display {
     public static JButton setAlarma = new JButton("Set Alarma");
     public static JButton plusHora = new JButton("h +");
     public static JButton plusMinutos = new JButton("m +");
+    public static JLabel showAlarma = new JLabel("ALARMA SONANDO");
     
     public static void InterfazInit(){
         panelBotones.add(alarmaOnOff);
@@ -58,9 +57,12 @@ public class Display {
         panelDisplay.add(displayHora);
         panelDisplay.add(displayAlarma);
         
+        showAlarma.setVisible(false);
+        
         panelIconos.add(iconoShowHora);
         panelIconos.add(iconoShowAlarma);
         panelIconos.add(iconoSet);
+        panelIconos.add(showAlarma);
         
         alarmaOnOff.addActionListener((ActionEvent e)->{
             Botonera.AlarmaOnOff();

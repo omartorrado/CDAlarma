@@ -6,7 +6,8 @@
 package cdalarma;
 
 import java.time.LocalTime;
-import javax.swing.JLabel;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Esta el la clase principal. Aqui se definen las variables de 
@@ -24,11 +25,29 @@ public class Reloj {
      * @param args 
      */
     public static void main(String[] args) {   
-        Display.InterfazInit();
-        UpdateClock uc=new UpdateClock();
-        uc.start();
+        Display.InterfazInit();        
+        /*
+        Lo que esta abajo hecho con un thread usando un timer 
+        */
+        Timer nrt= new Timer();
+        nrt.scheduleAtFixedRate(new TimerTask(){
+            @Override
+            public void run(){
+                horaActual=horaActual.plusSeconds(1);
+                Display.showClock(); 
+                if(horaActual.getHour()==alarma.getHour()&&horaActual.getMinute()==alarma.getMinute()&&Display.showAlarma.isVisible()==false&&Botonera.alarmaActiva){
+                    Altavoz.ringOn=true;
+                    Display.showAlarma.setVisible(true);
+                }else if(Display.showAlarma.isVisible()){
+                    Display.showAlarma.setVisible(false);
+                }
+            }
+        }, 0, 1000);
+        //UpdateClock uc=new UpdateClock();
+        //uc.start();
     }
-    
+       
+    /*
     public static class UpdateClock extends Thread{
 
         @Override
@@ -38,12 +57,11 @@ public class Reloj {
                 Thread.sleep(1000);
                 horaActual=horaActual.plusSeconds(1);
                 Display.showClock(); 
-                System.out.println(Display.panelIconos.getComponentCount());
-                if(horaActual.getHour()==alarma.getHour()&&horaActual.getMinute()==alarma.getMinute()&&Display.panelIconos.getComponentCount()<4){
+                if(horaActual.getHour()==alarma.getHour()&&horaActual.getMinute()==alarma.getMinute()&&Display.showAlarma.isVisible()==false&&Botonera.alarmaActiva){
                     Altavoz.ringOn=true;
-                    Display.panelIconos.add(new JLabel("ALARMA SONANDO"));
-                }else if(Display.panelIconos.getComponentCount()>3){
-                    Display.panelIconos.remove(3);
+                    Display.showAlarma.setVisible(true);
+                }else if(Display.showAlarma.isVisible()){
+                    Display.showAlarma.setVisible(false);
                 }
             } catch (InterruptedException ex) {                
             }
@@ -51,5 +69,6 @@ public class Reloj {
         }
         
     }
+*/
    
 }
