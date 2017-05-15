@@ -39,7 +39,12 @@ public class Reloj {
                     Altavoz.ringOn=true;
                     Display.showAlarma.setVisible(true);
                 }else if(Display.showAlarma.isVisible()){
-                    Display.showAlarma.setVisible(false);
+                    if(horaActual.getHour()==alarma.getHour()&&horaActual.getMinute()==alarma.getMinute()){
+                        Display.showAlarma.setVisible(false);
+                    }else{
+                        Display.showAlarma.setVisible(false);
+                        Altavoz.ringOn=false;  
+                    }
                 }
             }
         }, 0, 1000);

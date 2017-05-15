@@ -7,6 +7,7 @@ package cdalarma;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.time.format.DateTimeFormatter;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -45,18 +46,20 @@ public class Display {
         panelBotones.add(plusHora);
         panelBotones.add(plusMinutos);
         
-        displayHora.setText(Reloj.horaActual.getHour()+":"+Reloj.horaActual.getMinute()+":"+Reloj.horaActual.getSecond());
+        displayHora.setText(Reloj.horaActual.format(DateTimeFormatter.ISO_LOCAL_TIME));
         displayHora.setFont(new Font("TimesRoman",Font.PLAIN,24));
         displayAlarma.setFont(new Font(displayAlarma.getFont().getFamily(),Font.PLAIN,24));
         displayHora.setAlignmentX(0.5f);
         displayAlarma.setAlignmentX(0.5f);
         
-        displayAlarma.setText(Reloj.alarma.getHour()+":"+Reloj.alarma.getMinute());
+        //displayAlarma.setText(Reloj.alarma.getHour()+":"+Reloj.alarma.getMinute());
+        displayAlarma.setText(Reloj.alarma.format(DateTimeFormatter.ISO_LOCAL_TIME));
         
         panelDisplay.setLayout(new BoxLayout(panelDisplay,BoxLayout.Y_AXIS));
         panelDisplay.add(displayHora);
         panelDisplay.add(displayAlarma);
         
+        showAlarma.setFont(new Font("TimesRoman",Font.PLAIN,24));
         showAlarma.setVisible(false);
         
         panelIconos.add(iconoShowHora);
@@ -122,6 +125,10 @@ public class Display {
     }
 
     public static void showClock() {
+        
+        displayHora.setText(Reloj.horaActual.format(DateTimeFormatter.ISO_LOCAL_TIME));
+        /*
+        la linea de arriba hace todo esto por mi
         String hora,minuto,segundo;
         if(Reloj.horaActual.getHour()<10){
             hora="0"+Reloj.horaActual.getHour();
@@ -139,14 +146,14 @@ public class Display {
             segundo=""+Reloj.horaActual.getSecond();
         }
         displayHora.setText(hora+":"+minuto+":"+segundo);
-        
+        */
         }
     
     public static void showAlarma(){
         if(Botonera.alarmaActiva){
-            displayAlarma.setText(Reloj.alarma.getHour()+":"+Reloj.alarma.getMinute()+"  ACTIVA");
+            displayAlarma.setText(Reloj.alarma.format(DateTimeFormatter.ISO_LOCAL_TIME)+"  ACTIVA");
         }else{
-            displayAlarma.setText(Reloj.alarma.getHour()+":"+Reloj.alarma.getMinute()+"  APAGADA");
+            displayAlarma.setText(Reloj.alarma.format(DateTimeFormatter.ISO_LOCAL_TIME));
         }
     }
 

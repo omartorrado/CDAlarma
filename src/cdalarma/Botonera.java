@@ -10,7 +10,7 @@ package cdalarma;
  * @author otorradomiguez
  */
 public class Botonera {
-    public static boolean alarmaActiva;
+    public static boolean alarmaActiva=false;
     public static boolean setHora;
     public static boolean setAlarma;
     
