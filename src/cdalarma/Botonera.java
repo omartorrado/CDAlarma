@@ -18,11 +18,15 @@ public class Botonera {
      * Activa o desactiva la alarma segun su estado anterior
      */
     public static void AlarmaOnOff(){
+        /*
         if(alarmaActiva){
             alarmaActiva=false;            
         }else{
             alarmaActiva=true;
         }
+        */
+        //Esto es lo mismo de arriba de forma mas compacta
+        alarmaActiva = !alarmaActiva;
         Display.showAlarma();
     }
     
