@@ -5,14 +5,18 @@
  */
 package cdalarma;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.time.format.DateTimeFormatter;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -27,6 +31,7 @@ public class Display {
     public static JPanel panelDisplay = new JPanel();
     public static JPanel panelBotones = new JPanel();
     public static JPanel panelIconos = new JPanel();
+    public static JPanel panelSonando = new JPanel();
     public static JLabel displayHora = new JLabel();
     public static JLabel displayAlarma = new JLabel();
     public static JLabel iconoShowHora = new JLabel();
@@ -35,8 +40,8 @@ public class Display {
     public static JButton alarmaOnOff = new JButton("Alarma ON/OFF");
     public static JButton setHora = new JButton("set Hora");
     public static JButton setAlarma = new JButton("Set Alarma");
-    public static JButton plusHora = new JButton("h +");
-    public static JButton plusMinutos = new JButton("m +");
+    public static JButton plusHora = new JButton("H +");
+    public static JButton plusMinutos = new JButton("M +");
     public static JLabel showAlarma = new JLabel("ALARMA SONANDO");
     
     public static void InterfazInit(){
@@ -48,12 +53,12 @@ public class Display {
         
         displayHora.setText(Reloj.horaActual.format(DateTimeFormatter.ISO_LOCAL_TIME));
         displayHora.setFont(new Font("TimesRoman",Font.PLAIN,24));
-        displayAlarma.setFont(new Font(displayAlarma.getFont().getFamily(),Font.PLAIN,24));
+        displayAlarma.setFont(new Font(displayHora.getFont().getFamily(),Font.PLAIN,24));
         displayHora.setAlignmentX(0.5f);
         displayAlarma.setAlignmentX(0.5f);
         
         //displayAlarma.setText(Reloj.alarma.getHour()+":"+Reloj.alarma.getMinute());
-        displayAlarma.setText(Reloj.alarma.format(DateTimeFormatter.ISO_LOCAL_TIME));
+        displayAlarma.setText("Alarma -> "+Reloj.alarma.format(DateTimeFormatter.ISO_LOCAL_TIME));
         
         panelDisplay.setLayout(new BoxLayout(panelDisplay,BoxLayout.Y_AXIS));
         panelDisplay.add(displayHora);
@@ -61,11 +66,16 @@ public class Display {
         
         showAlarma.setFont(new Font("TimesRoman",Font.PLAIN,24));
         showAlarma.setVisible(false);
+        iconoShowHora.setFont(new Font("TimesRoman",Font.PLAIN,24));
+        iconoShowAlarma.setFont(new Font("TimesRoman",Font.PLAIN,24));
+        iconoSet.setFont(new Font("TimesRoman",Font.PLAIN,24));
         
         panelIconos.add(iconoShowHora);
         panelIconos.add(iconoShowAlarma);
         panelIconos.add(iconoSet);
-        panelIconos.add(showAlarma);
+        panelIconos.setBorder(BorderFactory.createLineBorder(Color.black, 2, true));
+        
+        panelSonando.add(showAlarma);
         
         alarmaOnOff.addActionListener((ActionEvent e)->{
             Botonera.AlarmaOnOff();
@@ -91,8 +101,10 @@ public class Display {
         marco.setSize(800,400);
         marco.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         marco.add(panelDisplay);
-        marco.add(panelIconos);
+        marco.add(Box.createVerticalStrut(30));
         marco.add(panelBotones);
+        marco.add(panelIconos);
+        marco.add(panelSonando);
         marco.setVisible(true);
     }
 
@@ -151,9 +163,9 @@ public class Display {
     
     public static void showAlarma(){
         if(Botonera.alarmaActiva){
-            displayAlarma.setText(Reloj.alarma.format(DateTimeFormatter.ISO_LOCAL_TIME)+"  ACTIVA");
+            displayAlarma.setText("Alarma -> "+Reloj.alarma.format(DateTimeFormatter.ISO_LOCAL_TIME)+"  ON");
         }else{
-            displayAlarma.setText(Reloj.alarma.format(DateTimeFormatter.ISO_LOCAL_TIME));
+            displayAlarma.setText("Alarma -> "+Reloj.alarma.format(DateTimeFormatter.ISO_LOCAL_TIME)+"  OFF");
         }
     }
 
