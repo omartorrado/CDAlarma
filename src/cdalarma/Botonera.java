@@ -6,7 +6,7 @@
 package cdalarma;
 
 /**
- *
+ *Esta clase controla el funcionamiento de los botones
  * @author otorradomiguez
  */
 public class Botonera {

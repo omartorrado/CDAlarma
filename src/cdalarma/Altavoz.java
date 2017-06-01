@@ -6,7 +6,7 @@
 package cdalarma;
 
 /**
- *
+ *Esta clase indica si la alarma debe sonar o no
  * @author otorradomiguez
  */
 public class Altavoz {

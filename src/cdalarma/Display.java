@@ -16,10 +16,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 /**
- *
+ * Esta clase se encarga de mostrar la hora, la alarma y los botones
  * @author otorradomiguez
  */
 public class Display {
@@ -44,6 +43,9 @@ public class Display {
     public static JButton plusMinutos = new JButton("M +");
     public static JLabel showAlarma = new JLabel("ALARMA SONANDO");
     
+    /**
+     * Inicia la interfaz grafica
+     */
     public static void InterfazInit(){
         panelBotones.add(alarmaOnOff);
         panelBotones.add(setHora);
@@ -109,7 +111,7 @@ public class Display {
     }
 
     /**
-     * Activa los leds en funcion de que variables de los leds esten activos
+     * Activa los leds en funcion de que variables de los leds esten activas
      *
      * @param showHora
      * @param showAlarma
@@ -136,6 +138,9 @@ public class Display {
         }
     }
 
+    /**
+     * Actualiza el reloj y lo muestra en el formato deseado
+     */
     public static void showClock() {
         
         displayHora.setText(Reloj.horaActual.format(DateTimeFormatter.ISO_LOCAL_TIME));
@@ -161,6 +166,10 @@ public class Display {
         */
         }
     
+    /**
+     * Actualiza la alarma e indica la hora para la que esta configurada y si esta
+     * activa o no
+     */
     public static void showAlarma(){
         if(Botonera.alarmaActiva){
             displayAlarma.setText("Alarma -> "+Reloj.alarma.format(DateTimeFormatter.ISO_LOCAL_TIME)+"  ON");
